@@ -1,0 +1,12 @@
+html, body {
+  background-color: hsl(217, 100%, 97%);
+  width: 100%;
+  margin: 0;
+  font-size: 16px;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+nav {
+  background-image: url(assets/bg-sidebar-desktop.svg);
+  background-repeat: no-repeat;
+}

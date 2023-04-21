@@ -1,0 +1,28 @@
+# Imagen base
+FROM node:14
+
+# Directorio de trabajo
+WORKDIR /app
+
+# Copiar archivos de dependencias
+COPY NewsletterBuddyFrontend/package*.json ./
+
+# Instalar dependencias
+RUN npm ci
+
+# Copiar el resto del código fuente
+COPY NewsletterBuddyFrontend/src ./src
+COPY NewsletterBuddyFrontend/index.html ./index.html
+COPY NewsletterBuddyFrontend/vite.config.ts ./vite.config.ts
+
+# Construir el proyecto frontend
+RUN npm run build
+
+# Instalar un servidor web simple para servir el frontend
+RUN npm install -g serve
+
+# Exponer el puerto en el que se ejecutará el frontend
+EXPOSE 8080
+
+# Comando para iniciar el servidor
+CMD ["serve", "-s", "dist", "-p", "8080"]

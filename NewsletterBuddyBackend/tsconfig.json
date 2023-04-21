@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "es2022",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "typeRoots": ["./node_modules/@types", "src/types.d.ts"],
+    "lib": ["es2020", "dom"],
+    "moduleResolution": "nodenext"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}

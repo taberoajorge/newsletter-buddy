@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile-backend
+    networks:
+      - app-network
+    depends_on:
+      - db
+    environment:
+      POSTGRES_USER: taberoajorge
+      POSTGRES_PASSWORD: "123456"
+      POSTGRES_DB: newsletter_buddy
+    ports:
+      - "3000:3000"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile-frontend
+    networks:
+      - app-network
+    ports:
+      - "8080:8080"
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: taberoajorge
+      POSTGRES_PASSWORD: "123456"
+      POSTGRES_DB: newsletter_buddy
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  pgdata:
