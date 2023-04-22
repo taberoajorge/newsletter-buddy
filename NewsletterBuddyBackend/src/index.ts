@@ -30,11 +30,10 @@ app.register(fastifyMailer as any, {
 });
 
 app.register(server);
-app.register(recipientsRoutes);
-
 app.register(fastifyMultipart, {
   addToBody: true,
 });
+
 app.register(fastifyCors, {
   origin: true,
   methods: ["POST"],
@@ -49,6 +48,7 @@ app.register(fastifyCors, {
 
 
 app.register(server);
+app.register(recipientsRoutes);
 
 app.get("/", async (_request, reply) => {
   try {

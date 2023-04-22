@@ -6,6 +6,7 @@ import * as schedule from "node-schedule";
 import { app } from "../index.js";
 
 export async function sendEmail(request: FastifyRequest, reply: FastifyReply) {
+  console.log("request.body", request);
   // rome-ignore lint/suspicious/noExplicitAny: <explanation>
   const data = (await request.body) as any;
 
