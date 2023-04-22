@@ -1,38 +1,31 @@
 import { h } from "preact";
+import styled from "styled-components";
 
 interface SubmitButtonProps {
   handleSubmit: () => void;
   disabled: boolean;
 }
 
-const style = {
-  button: {
-    width: "123px",
-    height: "48px",
-    background: "#022959",
-    borderRadius: "5px",
-    border: "none",
-    color: "white",
-    fontSize: "16px",
-  },
-  disabledButton: {
-    opacity: 0.6,
-    cursor: "not-allowed",
-  },
-};
+const StyledButton = styled.button`
+  width: 9rem;
+  height: 4rem;
+  padding: 0.2rem;
+  border-radius: 0.5rem;
+  border: 0.1rem solid var(--border-color);
+  color: var(--text-color);
+  background-color: var(--border-color);
+  font-size: 1.6rem;
+
+  @media (min-width: 768px) {
+    grid-area: "button";
+  }
+`;
 
 const SubmitButton = ({ handleSubmit, disabled }: SubmitButtonProps) => {
   return (
-    <button
-      onClick={handleSubmit}
-      style={{
-        ...style.button,
-        ...(disabled ? style.disabledButton : {}),
-      }}
-      disabled={disabled}
-    >
+    <StyledButton onClick={handleSubmit} disabled={disabled}>
       Submit
-    </button>
+    </StyledButton>
   );
 };
 

@@ -1,43 +1,23 @@
-import SendNewsletter from "../assets/icon-advanced.svg";
-import AddNewUser from "../assets/icon-pro.svg";
-import Dashboard from "../assets/icon-arcade.svg";
-import NavItem from "../components/NavItem";
+import styled from "styled-components";
 
-const style = {
-  display: "flex",
-  flexDirection: "column",
-  backgroundRepeat: "no-repeat",
-  backgroundPosition: "center",
-  width: "274px",
-  height: "568px",
-  left: "266px",
-  top: "121px",
-  borderRadius: "15px",
-};
+const StyledNav = styled.nav`
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: 1rem;
 
-const SideBar = ({ setContent }: any) => {
-  return (
-    <nav style={style}>
-      <NavItem
-        imgSrc={SendNewsletter}
-        alt="Newsletter Buddy"
-        label="Send Newsletter"
-        onClick={() => setContent("sendNewsletter")}
-      />
-      <NavItem
-        imgSrc={Dashboard}
-        alt="Newsletter Buddy"
-        label="Analytics"
-        onClick={() => setContent("analytics")}
-      />
-      <NavItem
-        imgSrc={AddNewUser}
-        alt="Newsletter Buddy"
-        label="Add New User"
-        onClick={() => setContent("addSubscriber")}
-      />
-    </nav>
-  );
+  @media (min-width: 768px) {
+    grid-area: side;
+    width: 100%;
+    flex-direction: column;
+    height: inherit;
+  }
+`;
+
+// rome-ignore lint/suspicious/noExplicitAny: <explanation>
+const SideBar = ({ children }: any) => {
+  return <StyledNav>{children}</StyledNav>;
 };
 
 export default SideBar;

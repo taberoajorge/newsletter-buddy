@@ -1,0 +1,38 @@
+version: '3.8'
+
+volumes:
+  psql_data: {}
+
+services:
+  # WARNING: database service shouldn't be defined here
+  psql_db:
+    image: postgres:15
+    restart: always
+    volumes:
+      - psql_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    env_file:
+      - docker/local/postgresql.env
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/production/backend.dockerfile
+    env_file:
+      - docker/production/backend.env
+    ports:
+      - 3000:3000
+    depends_on:
+      - psql_db
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/production/frontend.dockerfile
+    env_file:
+      - docker/production/frontend.env
+    ports:
+      - 8000:80
+    depends_on:
+      - backend

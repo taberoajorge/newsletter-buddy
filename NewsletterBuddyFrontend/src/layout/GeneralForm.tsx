@@ -1,5 +1,7 @@
 import CustomInput from "components/CustomInput";
-import { RefObject, h } from "preact";
+import { h, Ref } from "preact";
+import { JSX } from "preact/jsx-runtime";
+import styled from "styled-components";
 
 interface GeneralFormProps {
   title: string;
@@ -9,23 +11,29 @@ interface GeneralFormProps {
     type: string;
     value: string | File | null | undefined;
     accept?: string;
-    inputRef?: RefObject<HTMLInputElement>;
+    inputRef?: Ref<HTMLInputElement>;
   }[];
   handleChange: (e: Event, field: string) => void;
   handleFileChange?: (e: Event) => void;
   loading?: boolean;
 }
 
-const style = {
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "1rem",
-  },
-  title: {
-    marginBottom: "1rem",
-  },
-};
+const StyledForm = styled.form`
+  background-color: var(--secondary-color);
+  border: none;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+
+  label {
+    display: table-footer-group;
+  }
+
+  @media (min-width: 768px) {
+    grid-area: "form";
+  }
+`;
 
 const GeneralForm = ({
   title,
@@ -33,10 +41,12 @@ const GeneralForm = ({
   handleChange,
   handleFileChange = () => {},
   loading = false,
-}: GeneralFormProps) => {
+}: GeneralFormProps): JSX.Element => {
   return (
-    <form style={style.form}>
-      <h1 style={style.title}>{title}</h1>
+    <StyledForm>
+      <h1 style={{ fontSize: "2rem", textAlign: "center", margin: "1rem" }}>
+        {title}
+      </h1>
       {fields.map(({ id, label, type, value, accept, inputRef }) => (
         <CustomInput
           id={id}
@@ -51,7 +61,7 @@ const GeneralForm = ({
           disabled={loading}
         />
       ))}
-    </form>
+    </StyledForm>
   );
 };
 

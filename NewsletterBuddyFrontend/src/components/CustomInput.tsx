@@ -1,31 +1,42 @@
-import { RefObject, h } from "preact";
+import { h } from "preact";
+import styled from "styled-components";
 
-interface CustomInputProps {
-  id: string;
-  label: string;
-  type: string;
-  value: string | undefined;
-  accept?: string;
-  onChange: (e: Event) => void;
-  inputRef?: RefObject<HTMLInputElement>;
-  disabled?: boolean;
-}
+const StyledLabel = styled.label`
+  color: var(--text-color);
+  font-size: 1.6rem;
+`;
 
-const style = {
-  input: {
-    border: "1px solid #D6D9E6",
-    borderRadius: "8px",
-    width: "90%",
-    height: "40px",
-  },
-  fileInput: {
-    display: "inline-block",
-  },
-  disabledInput: {
-    opacity: 0.6,
-    cursor: "not-allowed",
-  },
-};
+const StyledInput = styled.input`
+  color: var(--text-color);
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-color);
+  margin: 1rem auto;
+  padding: 1rem;
+  width: 100%;
+
+  &:focus-visible {
+    outline: none;
+  }
+  &::placeholder {
+    color: var(--border-color);
+  }
+`;
+
+const StyledTextArea = styled.textarea`
+  color: var(--text-color);
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-color);
+  margin: 1rem auto;
+  padding: 1rem;
+  width: 100%;
+
+  &:focus-visible {
+    outline: none;
+  }
+  &::placeholder {
+    color: var(--border-color);
+  }
+`;
 
 const CustomInput = ({
   id,
@@ -36,31 +47,16 @@ const CustomInput = ({
   onChange,
   inputRef,
   disabled,
-}: CustomInputProps) => {
+}: // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+any) => {
   return (
-    <div>
-      <label htmlFor={id}>{label}</label>
+    <>
+      <StyledLabel htmlFor={id}>{label}</StyledLabel>
       {type === "textarea" ? (
-        <textarea
-          id={id}
-          style={{
-            ...style.input,
-            ...(disabled ? style.disabledInput : {}),
-          }}
-          value={value}
-          onChange={onChange}
-        />
+        <StyledTextArea id={id} value={value} onChange={onChange} />
       ) : (
-        <input
+        <StyledInput
           id={id}
-          style={
-            type === "file"
-              ? style.fileInput
-              : {
-                  ...style.input,
-                  ...(disabled ? style.disabledInput : {}),
-                }
-          }
           type={type}
           value={value}
           accept={accept}
@@ -68,7 +64,7 @@ const CustomInput = ({
           ref={inputRef}
         />
       )}
-    </div>
+    </>
   );
 };
 

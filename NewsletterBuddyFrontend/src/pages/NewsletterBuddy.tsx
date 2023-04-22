@@ -4,7 +4,10 @@ import Container from "../layout/container";
 import SideBar from "../layout/SideBar";
 import ContentHandler from "../layout/contentHandler";
 import { sendNewsletter, addSubscriber } from "../services/recipientService";
-
+import NavItem from "components/NavItem";
+import SendNewsletter from "../assets/icon-advanced.svg";
+import AddNewUser from "../assets/icon-pro.svg";
+import Dashboard from "../assets/icon-arcade.svg";
 interface State {
   file: File | null;
   subject: string;
@@ -127,23 +130,42 @@ const NewsletterBuddy = () => {
 
   return (
     <Container>
-      <SideBar setContent={setContent} />
+      <h1 style={{ fontSize: "4rem", textAlign: "center" }}>Newsletter Budy</h1>
 
-      <div style="display: flex; flex-direction: column;gap: 1rem;">
-        <ContentHandler
-          content={content}
-          formState={{
-            state,
-            handleChange,
-            handleFileChange,
-            fileInputRef,
-            loading,
-          }}
+      <ContentHandler
+        content={content}
+        formState={{
+          state,
+          handleChange,
+          handleFileChange,
+          fileInputRef,
+          loading,
+        }}
+      />
+      {content !== "analytics" && (
+        <SubmitButton handleSubmit={handleFormSubmit} disabled={loading} />
+      )}
+
+      <SideBar setContent={setContent}>
+        <NavItem
+          imgSrc={SendNewsletter}
+          alt="Newsletter Buddy"
+          label="Send Newsletter"
+          onClick={() => setContent("sendNewsletter")}
         />
-        {content !== "analytics" && (
-          <SubmitButton handleSubmit={handleFormSubmit} disabled={loading} />
-        )}
-      </div>
+        <NavItem
+          imgSrc={Dashboard}
+          alt="Newsletter Buddy"
+          label="Analytics"
+          onClick={() => setContent("analytics")}
+        />
+        <NavItem
+          imgSrc={AddNewUser}
+          alt="Newsletter Buddy"
+          label="Add New User"
+          onClick={() => setContent("addSubscriber")}
+        />
+      </SideBar>
     </Container>
   );
 };

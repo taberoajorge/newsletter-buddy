@@ -27,3 +27,5 @@ dist-ssr
 .env.backend
 dist
 .pnpm-store
+
+docker/production/*.env

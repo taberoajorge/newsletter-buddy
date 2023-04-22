@@ -1,16 +1,17 @@
 import { Router, Route } from "preact-router";
 import NewsletterBuddy from "../pages/NewsletterBuddy";
 import Unsubscribe from "../pages/Unsubscribe";
-import "../global.css";
+import { GlobalStyles } from "../GlobalStyles";
 
 const App = () => {
   return (
-    <div>
+    <main>
+      <GlobalStyles />
       <Router>
         <Route path="/" component={NewsletterBuddy} />
         <Route path="/unsubscribe/:userId" component={Unsubscribe} />
       </Router>
-    </div>
+    </main>
   );
 };
 

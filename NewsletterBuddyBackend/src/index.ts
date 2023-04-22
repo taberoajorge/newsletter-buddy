@@ -1,12 +1,14 @@
 import fastify, { FastifyRequest, FastifyReply } from "fastify";
 import { readFile } from "fs/promises";
 import server from "./db.js";
+// @ts-ignore
 import fastifyMailer from "fastify-mailer";
 import fastifyMultipart from "@fastify/multipart";
 import fastifyCors from "@fastify/cors";
 import recipientsRoutes from "./routes/recipientsRoutes.js";
 import { getRecipients } from "./helpers/recipients.helper.js";
 import * as schedule from "node-schedule";
+import config from "./config.js";
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -18,10 +20,10 @@ const app = fastify();
 
 app.register(fastifyMailer as any, {
   transport: {
-    service: "gmail",
+    service: config.SMTP.PROVIDER,
     auth: {
-      user: "taberoajorge@gmail.com",
-      pass: "pfrqdsdkxogndhxp",
+      user: config.SMTP.USER,
+      pass: config.SMTP.PASSWORD,
     },
   },
 });
@@ -117,7 +119,7 @@ app.post("/send-email", async (req: FastifyRequest, reply: FastifyReply) => {
 
 app.listen(
   {
-    port: 3000,
+    port: config.PORT,
     host: "0.0.0.0",
     backlog: 511,
   },

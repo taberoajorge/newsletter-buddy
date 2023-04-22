@@ -1,0 +1,43 @@
+version: '3.8'
+
+volumes:
+  psql_data: {}
+
+services:
+  psql_db:
+    image: postgres:15
+    restart: always
+    volumes:
+      - psql_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    env_file:
+      - docker/local/postgresql.env
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/local/backend.dockerfile
+    command: 'pnpm run dev'
+    env_file:
+      - docker/local/backend.env
+    volumes:
+      - ./NewsletterBuddyBackend:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - psql_db
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/local/frontend.dockerfile
+    command: 'pnpm run dev'
+    env_file:
+      - docker/local/frontend.env
+    volumes:
+      - ./NewsletterBuddyFrontend:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - backend

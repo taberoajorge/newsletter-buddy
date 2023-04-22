@@ -3,16 +3,12 @@
 import { FastifyPluginCallback } from 'fastify';
 import fastifyPostgres from '@fastify/postgres';
 import pg from 'pg';
+import config from './config.js';
+
 const { Pool } = pg;
 
-
 export const pool = new Pool({
-
-  user: 'taberoajorge',
-  host: 'localhost',
-  database: 'newsletter_buddy',
-  password: '123456',
-  port: 5432,
+  connectionString: config.DATABASE_URL,
 });
 
 export interface Recipient {
@@ -41,7 +37,7 @@ const createRecipientsTable = async () => {
 const server: FastifyPluginCallback = function (fastify, opts, done) {
 
   fastify.register(fastifyPostgres, {
-    connectionString: `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@db:5432/${process.env.POSTGRES_DB}`
+    connectionString: config.DATABASE_URL
   });
 
   createRecipientsTable();

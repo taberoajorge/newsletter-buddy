@@ -1,28 +1,28 @@
+import styled from "styled-components";
+
 interface NavItemProps {
   imgSrc: string;
   alt: string;
   label: string;
   onClick: () => void;
 }
-const style = {
-  display: "flex",
-  alignItems: "center",
-  gap: "1rem",
-  padding: "1rem",
-  color: "white",
-  fontWeight: "bold",
-  fontSize: "1.2rem",
-  border: "none",
-  background: "none",
-  cursor: "pointer",
-};
+
+const StyledNavItem = styled.button`
+  background-color: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+`;
 
 const NavItem = ({ imgSrc, alt, label, onClick }: NavItemProps) => {
   return (
-    <button style={style} onClick={onClick}>
+    <StyledNavItem onClick={onClick}>
       <img src={imgSrc} alt={alt} />
       <label>{label}</label>
-    </button>
+    </StyledNavItem>
   );
 };
 

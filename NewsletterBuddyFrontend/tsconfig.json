@@ -16,7 +16,9 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "types": ["styled-components"],
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
   "include": ["src/**/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
