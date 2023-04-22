@@ -12,3 +12,9 @@ export const addSubscriber = async (name: string, email: string) => {
   });
   return response.data;
 };
+
+export const getRecipients = async () => {
+  const response = await axios.get("http://localhost:3000/recipients");
+  return response.data;
+};
+

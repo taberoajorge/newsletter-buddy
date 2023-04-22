@@ -1,16 +1,6 @@
+import { AddSubscriberFormProps } from "interfaces/interfaces";
 import GeneralForm from "../layout/GeneralForm";
 import { h } from "preact";
-
-interface AddSubscriberFormProps {
-  formState: {
-    state: {
-      name: string;
-      singleEmail: string;
-    };
-    handleChange: (e: Event, field: string) => void;
-    loading: boolean;
-  };
-}
 
 const AddSubscriberForm = ({ formState }: AddSubscriberFormProps) => {
   const fields = [

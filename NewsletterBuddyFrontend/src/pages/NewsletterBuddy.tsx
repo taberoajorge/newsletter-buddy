@@ -8,46 +8,18 @@ import NavItem from "components/NavItem";
 import SendNewsletter from "../assets/icon-advanced.svg";
 import AddNewUser from "../assets/icon-pro.svg";
 import Dashboard from "../assets/icon-arcade.svg";
-interface State {
-  file: File | null;
-  subject: string;
-  htmlBody: string;
-  scheduleDate: string;
-  name: string;
-  singleEmail: string;
-}
-
-const initialState: State = {
-  file: null,
-  subject: "",
-  htmlBody: "",
-  scheduleDate: "",
-  name: "",
-  singleEmail: "",
-};
-
-interface Action {
-  type: "updateField" | "reset";
-  field?: string;
-  value?: string | File | null;
-}
-
-function reducer(state: State, action: Action): State {
-  switch (action.type) {
-    case "updateField":
-      return action.field ? { ...state, [action.field]: action.value } : state;
-    case "reset":
-      return initialState;
-    default:
-      return state;
-  }
-}
+import { Action, State } from "interfaces/interfaces";
 
 const NewsletterBuddy = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [content, setContent] = useState("sendNewsletter");
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const incrementEmailsSent = () => {
+    const currentCount = parseInt(localStorage.getItem("emailsSent") || "0");
+    localStorage.setItem("emailsSent", (currentCount + 1).toString());
+  };
 
   const handleChange = (event: Event, field: string) => {
     const target = event.target as HTMLInputElement;
@@ -74,7 +46,12 @@ const NewsletterBuddy = () => {
     formData.append("html", state.htmlBody);
 
     try {
-      await sendNewsletter(formData);
+      const result = await sendNewsletter(formData);
+
+      if (result.status !== 200) {
+        incrementEmailsSent();
+      }
+
       alert("Newsletter submitted successfully!");
 
       if (fileInputRef.current) {
@@ -132,16 +109,18 @@ const NewsletterBuddy = () => {
     <Container>
       <h1 style={{ fontSize: "4rem", textAlign: "center" }}>Newsletter Budy</h1>
 
-      <ContentHandler
-        content={content}
-        formState={{
-          state,
-          handleChange,
-          handleFileChange,
-          fileInputRef,
-          loading,
-        }}
-      />
+      <article style="width: 90%;max-width: 50rem;height: 100%;min-height: 45rem;">
+        <ContentHandler
+          content={content}
+          formState={{
+            state,
+            handleChange,
+            handleFileChange,
+            fileInputRef,
+            loading,
+          }}
+        />
+      </article>
       {content !== "analytics" && (
         <SubmitButton handleSubmit={handleFormSubmit} disabled={loading} />
       )}
@@ -169,5 +148,25 @@ const NewsletterBuddy = () => {
     </Container>
   );
 };
+
+const initialState: State = {
+  file: null,
+  subject: "",
+  htmlBody: "",
+  scheduleDate: "",
+  name: "",
+  singleEmail: "",
+};
+
+function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case "updateField":
+      return action.field ? { ...state, [action.field]: action.value } : state;
+    case "reset":
+      return initialState;
+    default:
+      return state;
+  }
+}
 
 export default NewsletterBuddy;

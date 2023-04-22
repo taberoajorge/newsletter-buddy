@@ -20,6 +20,10 @@ const StyledInput = styled.input`
   &::placeholder {
     color: var(--border-color);
   }
+
+  @media (min-width: 768px) {
+    max-width: 50rem !important;
+  }
 `;
 
 const StyledTextArea = styled.textarea`
@@ -29,12 +33,18 @@ const StyledTextArea = styled.textarea`
   margin: 1rem auto;
   padding: 1rem;
   width: 100%;
+  max-width: 35rem !important;
+  max-height: 24rem !important;
 
   &:focus-visible {
     outline: none;
   }
   &::placeholder {
     color: var(--border-color);
+  }
+
+  @media (min-width: 768px) {
+    max-width: 50rem !important;
   }
 `;
 

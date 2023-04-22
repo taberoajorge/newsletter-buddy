@@ -1,11 +1,5 @@
+import { NavItemProps } from "interfaces/interfaces";
 import styled from "styled-components";
-
-interface NavItemProps {
-  imgSrc: string;
-  alt: string;
-  label: string;
-  onClick: () => void;
-}
 
 const StyledNavItem = styled.button`
   background-color: transparent;

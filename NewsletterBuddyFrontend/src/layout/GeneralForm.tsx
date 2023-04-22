@@ -1,22 +1,8 @@
 import CustomInput from "components/CustomInput";
+import { GeneralFormProps } from "interfaces/interfaces";
 import { h, Ref } from "preact";
 import { JSX } from "preact/jsx-runtime";
 import styled from "styled-components";
-
-interface GeneralFormProps {
-  title: string;
-  fields: {
-    id: string;
-    label: string;
-    type: string;
-    value: string | File | null | undefined;
-    accept?: string;
-    inputRef?: Ref<HTMLInputElement>;
-  }[];
-  handleChange: (e: Event, field: string) => void;
-  handleFileChange?: (e: Event) => void;
-  loading?: boolean;
-}
 
 const StyledForm = styled.form`
   background-color: var(--secondary-color);
@@ -55,7 +41,9 @@ const GeneralForm = ({
           value={type === "file" ? undefined : (value as string)}
           accept={accept}
           onChange={
-            type === "file" ? handleFileChange : (e) => handleChange(e, id)
+            type === "file"
+              ? handleFileChange
+              : (e: Event) => handleChange(e, id)
           }
           inputRef={inputRef}
           disabled={loading}

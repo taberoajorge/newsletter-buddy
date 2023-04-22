@@ -1,10 +1,6 @@
+import { SubmitButtonProps } from "interfaces/interfaces";
 import { h } from "preact";
 import styled from "styled-components";
-
-interface SubmitButtonProps {
-  handleSubmit: () => void;
-  disabled: boolean;
-}
 
 const StyledButton = styled.button`
   width: 9rem;
@@ -12,7 +8,7 @@ const StyledButton = styled.button`
   padding: 0.2rem;
   border-radius: 0.5rem;
   border: 0.1rem solid var(--border-color);
-  color: var(--text-color);
+  color: white;
   background-color: var(--border-color);
   font-size: 1.6rem;
 

@@ -13,7 +13,7 @@ const GlobalStyles = createGlobalStyle`
         --button-color: hsl(192, 100%, 67%);
         --check: hsl(280, 87%, 65%);
         --bar-size: 4.5rem;
-        --text-color: hsl(236, 33%, 92%);
+        --text-color: #777A92;
     }
     * {
         margin: 0;
@@ -23,10 +23,6 @@ const GlobalStyles = createGlobalStyle`
         color: white;
     }
 
-    nav {
-      background-image: url(assets/bg-sidebar-desktop.svg);
-      background-repeat: no-repeat;
-    }
     html {
         font-size: 62.5%;
     }

@@ -1,20 +1,5 @@
+import { SendNewsletterFormProps } from "interfaces/interfaces";
 import GeneralForm from "../layout/GeneralForm";
-import { RefObject, h } from "preact";
-
-interface SendNewsletterFormProps {
-  formState: {
-    state: {
-      file: File | null;
-      subject: string;
-      htmlBody: string;
-      scheduleDate: string;
-    };
-    handleChange: (e: Event, field: string) => void;
-    handleFileChange: (e: Event) => void;
-    fileInputRef: RefObject<HTMLInputElement>;
-    loading: boolean;
-  };
-}
 
 const SendNewsletterForm = ({ formState }: SendNewsletterFormProps) => {
   const fields = [

@@ -9,9 +9,9 @@ const StyledNav = styled.nav`
 
   @media (min-width: 768px) {
     grid-area: side;
-    width: 100%;
     flex-direction: column;
     height: inherit;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
   }
 `;
 
