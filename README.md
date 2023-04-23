@@ -52,7 +52,7 @@ NODE_ENV=production
 Dado que estamos vinculando volúmenes para cada servicio, es necesario acceder a los servicios para instalar las dependencias, ya que Docker no puede crear archivos en nuestro directorio.
 
 1. Clone este repositorio y cambie al directorio clonado.
-2. Recuerda cambiar los valores de las varibales de entorno de los .env de local en `docker/local` debes cambiar los calores de `backend.env` y `frontend.env`
+2. Recuerda cambiar los valores de las variables de entorno de los .env de local en `docker/local` debes cambiar los valores de `backend.env` y `frontend.env`
 3. Instale las dependencias del backend con los siguientes comandos:
 
 `docker-compose -f docker-compose.local.yml run --rm backend bash`
