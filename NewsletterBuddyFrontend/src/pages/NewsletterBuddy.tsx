@@ -28,7 +28,7 @@ const NewsletterBuddy = () => {
 
   const handleSubmitNewsletter = async () => {
     if (!state.subject || !state.htmlBody) {
-      alert("Please fill out all fields");
+      alert("Please fil out all fields");
       return;
     }
 
@@ -107,7 +107,9 @@ const NewsletterBuddy = () => {
 
   return (
     <Container>
-      <h1 style={{ fontSize: "4rem", textAlign: "center" }}>Newsletter Buddy</h1>
+      <h1 style={{ fontSize: "4rem", textAlign: "center" }}>
+        Newsletter Buddy
+      </h1>
 
       <article style="width: 90%;max-width: 50rem;height: 100%;min-height: 45rem;">
         <ContentHandler
