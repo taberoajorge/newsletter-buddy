@@ -30,7 +30,7 @@ Dado que estamos vinculando volúmenes para cada servicio, es necesario acceder 
 3. Instale las dependencias del backend con los siguientes comandos:
 
 - `docker-compose -f docker-compose.local.yml run --rm backend bash`
-- `pnpm install` 
+- `npm install` 
 - `exit`
 
 4. Instale las dependencias del frontend con los siguientes comandos:` 
