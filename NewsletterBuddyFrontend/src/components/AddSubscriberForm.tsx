@@ -1,6 +1,6 @@
+import { h } from "preact";
 import { AddSubscriberFormProps } from "interfaces/interfaces";
 import GeneralForm from "../layout/GeneralForm";
-import { h } from "preact";
 
 const AddSubscriberForm = ({ formState }: AddSubscriberFormProps) => {
   const fields = [
@@ -12,10 +12,10 @@ const AddSubscriberForm = ({ formState }: AddSubscriberFormProps) => {
       disabled: formState.loading,
     },
     {
-      id: "singleEmail",
-      label: "Add a single email address:",
+      id: "email",
+      label: "Add an email or multiple addresses (separated by commas)",
       type: "email",
-      value: formState.state.singleEmail,
+      value: formState.state.email,
       disabled: formState.loading,
     },
   ];

@@ -5,20 +5,9 @@ import { JSX } from "preact/jsx-runtime";
 import styled from "styled-components";
 
 const StyledForm = styled.form`
-  background-color: var(--secondary-color);
-  border: none;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  margin-bottom: 0.5rem;
-  text-align: center;
-
-  label {
-    display: table-footer-group;
-  }
-
-  @media (min-width: 768px) {
-    grid-area: "form";
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 `;
 
 const GeneralForm = ({
@@ -30,7 +19,7 @@ const GeneralForm = ({
 }: GeneralFormProps): JSX.Element => {
   return (
     <StyledForm>
-      <h1 style={{ fontSize: "2rem", textAlign: "center", margin: "1rem" }}>
+      <h1>
         {title}
       </h1>
       {fields.map(({ id, label, type, value, accept, inputRef }) => (

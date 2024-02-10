@@ -1,9 +1,10 @@
 import { h } from "preact";
 import styled from "styled-components";
 
-const StyledLabel = styled.label`
+export const StyledLabel = styled.label`
   color: var(--text-color);
   font-size: 1.6rem;
+  margin-bottom: 0.5rem;
 `;
 
 const StyledInput = styled.input`
@@ -11,8 +12,10 @@ const StyledInput = styled.input`
   border-radius: 0.5rem;
   border: 1px solid var(--border-color);
   margin: 1rem auto;
-  padding: 1rem;
+  padding: 1rem 1.2rem;
   width: 100%;
+  box-shadow: 2px 2px #f5f5f5;
+  border: 1px solid hsl(0,0%,86%);
 
   &:focus-visible {
     outline: none;
@@ -21,9 +24,6 @@ const StyledInput = styled.input`
     color: var(--border-color);
   }
 
-  @media (min-width: 768px) {
-    max-width: 50rem !important;
-  }
 `;
 
 const StyledTextArea = styled.textarea`
@@ -33,8 +33,8 @@ const StyledTextArea = styled.textarea`
   margin: 1rem auto;
   padding: 1rem;
   width: 100%;
-  max-width: 35rem !important;
-  max-height: 24rem !important;
+  box-shadow: 2px 2px #f5f5f5;
+  border: 1px solid hsl(0,0%,86%);
 
   &:focus-visible {
     outline: none;
@@ -43,9 +43,11 @@ const StyledTextArea = styled.textarea`
     color: var(--border-color);
   }
 
-  @media (min-width: 768px) {
-    max-width: 50rem !important;
-  }
+`;
+
+const StyledInputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const CustomInput = ({
@@ -56,11 +58,10 @@ const CustomInput = ({
   accept,
   onChange,
   inputRef,
-  disabled,
-}: // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+}:
 any) => {
   return (
-    <>
+    <StyledInputContainer>
       <StyledLabel htmlFor={id}>{label}</StyledLabel>
       {type === "textarea" ? (
         <StyledTextArea id={id} value={value} onChange={onChange} />
@@ -74,7 +75,7 @@ any) => {
           ref={inputRef}
         />
       )}
-    </>
+    </StyledInputContainer>
   );
 };
 

@@ -1,30 +1,32 @@
 import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
-import axios from "axios";
+import { unsubscribeUser } from "../services/recipient-service";
 
-const Unsubscribe = (props: { userId: string }) => {
-  const { userId } = props;
+const Unsubscribe = ({ userId }) => {
   const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    async function unsubscribe() {
+    const performUnsubscribe = async () => {
+      setIsLoading(true);
       try {
-        const response = await axios.get(
-          `http://localhost:3000/unsubscribe/${userId}`
-        );
-        setMessage(response.data.message);
+        const response = await unsubscribeUser(userId);
+        setMessage(response.message);
       } catch (error) {
+        console.error("Error unsubscribing:", error);
         setMessage("An error occurred while processing your request.");
+      } finally {
+        setIsLoading(false);
       }
-    }
+    };
 
-    unsubscribe();
+    performUnsubscribe();
   }, [userId]);
 
   return (
     <div>
       <h1>Unsubscribe</h1>
-      <p>{message}</p>
+      {isLoading ? <p>Processing your request...</p> : <p>{message}</p>}
     </div>
   );
 };

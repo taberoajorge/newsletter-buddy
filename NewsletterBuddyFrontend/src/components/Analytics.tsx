@@ -1,49 +1,81 @@
 import { useEffect, useState } from "preact/hooks";
-import { getRecipients } from "../services/recipientService";
 import styled from "styled-components";
+import emailsSentIcon from "../assets/email-svgrepo-com.svg";
+import suscribersIcon from "../assets/user-svgrepo-com.svg";
+import { getRecipients, getSentEmails } from "../services/recipient-service";
 
 const StyledAnalyticsContainer = styled.div`
-  display: grid;
-  grid-template-areas: "count email";
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 1rem;
-  margin: 1rem;
-  padding: 1rem;
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  justify-content: space-around;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const StyledCard = styled.div`
-  border-radius: 0.5rem;
-  background-color: var(--main-color);
-  height: 5rem;
+  background-color: #fff;
+  box-shadow: 2px 2px #f3f3f3;
+  border: 1px solid #e6e6e6;
+  border-radius: 0.6rem;
+  padding: 2.5rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: space-around;
+  align-items: center;
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    img {
+      width: 3rem;
+    }
+
+    p {
+      font-size: 3rem;
+      color: #4a4a4a;
+    }
+  }
 `;
+
+const fetchData = async (fetchFunction, setState) => {
+  const result = await fetchFunction();
+  setState(result);
+};
 
 const Analytics = () => {
   const [recipients, setRecipients] = useState([]);
-  const currentCount = parseInt(localStorage.getItem("emailsSent") || "0");
+  const [sentEmails, setSentEmails] = useState([]);
 
   useEffect(() => {
-    getRecipients().then((res) => {
-      setRecipients(res);
-    });
+    fetchData(getRecipients, setRecipients);
+    fetchData(getSentEmails, setSentEmails);
   }, []);
 
   return (
     <>
-      <h2>Analytics</h2>
+      <h1>Analytics</h1>
 
       <StyledAnalyticsContainer>
         <StyledCard>
-          <h3>Recipients</h3>
-          <p>{recipients.length}</p>
+          <div>
+            <img src={suscribersIcon} alt="Suscribers" />
+            <p>{recipients.length}</p>
+          </div>
+          <h3>Suscribers</h3>
         </StyledCard>
 
         <StyledCard>
-          <h3>Emails sents</h3>
-          <p>{currentCount}</p>
+          <div>
+            <img src={emailsSentIcon} alt="Emails Sent" />
+            <p>{sentEmails.length}</p>
+          </div>
+          <h3>Emails Sent</h3>
         </StyledCard>
       </StyledAnalyticsContainer>
     </>

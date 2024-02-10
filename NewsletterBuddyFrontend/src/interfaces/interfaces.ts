@@ -4,10 +4,14 @@ export interface AddSubscriberFormProps {
   formState: {
     state: {
       name: string;
-      singleEmail: string;
+      email: string;
     };
+    content: string;
     handleChange: (e: Event, field: string) => void;
+    handleAddSubscriber: () => void;
+    handleAddMultipleSubscribers: () => void;
     loading: boolean;
+    dispatch: (action: Action) => void;
   };
 }
 
@@ -45,10 +49,12 @@ export interface ContentHandlerProps {
       htmlBody: string;
       scheduleDate: string;
       name: string;
-      singleEmail: string;
+      email: string;
     };
     handleChange: (e: Event, field: string) => void;
     handleFileChange: (e: Event) => void;
+    handleAddSubscriber: () => void;
+    handleAddMultipleSubscribers: () => void;
     fileInputRef: RefObject<HTMLInputElement>;
     loading: boolean;
   };
@@ -65,6 +71,7 @@ export interface GeneralFormProps {
   }[];
   handleChange: (e: Event, field: string) => void;
   handleFileChange?: (e: Event) => void;
+  handleSubmit?: (e: Event) => void;
   loading?: boolean;
 }
 
@@ -74,7 +81,7 @@ export interface State {
   htmlBody: string;
   scheduleDate: string;
   name: string;
-  singleEmail: string;
+  email: string;
 }
 
 export interface Action {
