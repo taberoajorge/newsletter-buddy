@@ -10,7 +10,7 @@ services:
     volumes:
       - psql_data:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - "5433:5432"
     env_file:
       - docker/local/postgresql.env
 
@@ -18,11 +18,12 @@ services:
     build:
       context: .
       dockerfile: docker/local/backend.dockerfile
-    command: 'pnpm run dev'
+    command: 'npm run dev'
     env_file:
       - docker/local/backend.env
     volumes:
       - ./NewsletterBuddyBackend:/app
+      - /app/node_modules
     ports:
       - 3000:3000
     depends_on:
@@ -37,6 +38,7 @@ services:
       - docker/local/frontend.env
     volumes:
       - ./NewsletterBuddyFrontend:/app
+      - /app/node_modules
     ports:
       - 8000:8000
     depends_on:
