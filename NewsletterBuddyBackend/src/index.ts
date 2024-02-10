@@ -1,76 +1,59 @@
-import fastify, { FastifyRequest, FastifyReply } from "fastify";
-import { readFile } from "fs/promises";
-import server from "./db.js";
-// @ts-ignore
-import fastifyMailer from "fastify-mailer";
-import fastifyMultipart from "@fastify/multipart";
-import fastifyCors from "@fastify/cors";
-import recipientsRoutes from "./routes/recipientsRoutes.js";
+import dotenv from 'dotenv';
+dotenv.config({ path: './backend.env' });
+import express from 'express';
+import cors from 'cors';
+import nodemailer from 'nodemailer';
+import multer from 'multer';
+import { readFile } from 'fs/promises';
+import config from './lib/config.js';
+import recipientsRoutes from './routes/recipients-routes.js';
+import { Request } from 'express';
+import sequelize from './lib/db.js';
 
-import config from "./config.js";
+const app = express();
 
-declare module 'fastify' {
-  interface FastifyInstance {
-    // rome-ignore lint/suspicious/noExplicitAny: <explanation>
-    mailer: any;
-  }
+app.use(cors());
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+const storage = multer.memoryStorage();
+
+const mailerTransport = nodemailer.createTransport({
+  host: config.SMTP.PROVIDER,
+  port: 587,
+  auth: {
+    user: config.SMTP.USER,
+    pass: config.SMTP.PASSWORD,
+  },
+});
+
+interface CustomRequest extends Request {
+  mailer: any;
 }
 
-export const app = fastify();
-
-// rome-ignore lint/suspicious/noExplicitAny: <explanation>
-app.register(fastifyMailer as any, {
-  transport: {
-    service: config.SMTP.PROVIDER,
-    auth: {
-      user: config.SMTP.USER,
-      pass: config.SMTP.PASSWORD,
-    },
-  },
+app.use((req: CustomRequest, res, next) => {
+  req.mailer = mailerTransport;
+  next();
 });
 
-app.register(server);
-app.register(fastifyMultipart, {
-  addToBody: true,
-});
-
-app.register(fastifyCors, {
-  origin: true,
-  methods: ["POST"],
-  allowedHeaders: [
-    "Content-Type",
-    "Authorization",
-    "Content-Length",
-    "X-Requested-With",
-  ],
-  credentials: true, // Permitir cookies
-});
-
-
-app.register(server);
-app.register(recipientsRoutes);
-
-app.get("/", async (_request, reply) => {
+app.get("/", async (req, res) => {
   try {
     const file = await readFile("index.html");
-    reply.type("text/html").send(file);
+    res.type("text/html").send(file);
   } catch (error) {
     console.error(error);
-    reply.code(500).send("Internal server error");
+    res.status(500).send("Internal server error");
   }
 });
 
-app.listen(
-  {
-    port: config.PORT,
-    host: "0.0.0.0",
-    backlog: 511,
-  },
-  (err, address) => {
-    if (err) {
-      console.error(err);
-      process.exit(1);
-    }
-    console.log(`Server listening on ${address}`);
-  }
-);
+app.use('/api', recipientsRoutes);
+
+sequelize.sync().then(() => {
+  console.log('Connection to the established database and synchronized models.');
+  app.listen(config.PORT || 3000, '0.0.0.0', () => {
+    console.log(`Server listening on port ${config.PORT || 3000}`);
+  });
+}).catch(err => {
+  console.error('Connection with the database could not be established:', err);
+});
