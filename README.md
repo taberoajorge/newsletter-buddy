@@ -3,11 +3,18 @@
 
 Newsletter Buddy es una aplicación para el envío de boletines informativos. 
 
+## Capturas:
+
+![image](screenshots/2024-02-10_12-27.png)
+![image](screenshots/2024-02-10_12-28_1.png)
+![image](screenshots/2024-02-10_12-28.png)
+
 ## Estructura del proyecto
 
 El proyecto consta de las siguientes partes:
 
 -   Base de datos: PostgreSQL como sistema de gestión de bases de datos.
+-   ![image](screenshots/db.png)
 -   Backend: Construido con Node.js, utilizando TypeScript como lenguaje de programación y Express como marco de aplicación web.
 -   Frontend: Utiliza Preact como biblioteca de interfaz de usuario, Vite como herramienta de construcción y desarrollo, y pnpm como administrador de paquetes.
 
