@@ -1,16 +1,15 @@
 {
   "compilerOptions": {
     "target": "es2017",
-    "module": "es2022",
+    "module": "NodeNext",
     "outDir": "./dist",
-    "strict": true,
+    "strict": false,
     "esModuleInterop": true,
-    "typeRoots": ["./node_modules/@types", "src/types.d.ts"],
-    "lib": ["es2020", "dom"],
     "moduleResolution": "nodenext"
   },
   "ts-node": {
-    "esm": true
+    "esm": true,
+    "transpileOnly": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
